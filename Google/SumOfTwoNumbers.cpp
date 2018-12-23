@@ -1,3 +1,10 @@
+// Given a list of numbers and a number k, return whether any two numbers
+// from the list add up to k.
+// E.g. given [10, 15, 3, 7] and k of 17
+// return truw since 10 + 7 is 17.
+
+// upgrade: Do this in one pass
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
