@@ -26,12 +26,12 @@ void scheduler(void (*f)(int), int n);
 int main() {
 	Timing T;
 	int n = 0;
-	auto f = [](int n){ std::cout << n << "\n"; };
+	auto f = [](){ std::cout << "Hello World!" << std::endl; };
 
 	scheduler(f, n);
 }
 
-void scheduler(void (*f)(int), int n) {
+void scheduler(void (*f)(), int n) {
 	Sleep(n);
-	f(n);
+	f();
 }
