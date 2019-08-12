@@ -29,24 +29,6 @@ enum Operator {
     plus, minus, multiply, divide
 };
 
-std::ostream& operator<<(std::ostream& os, Operator c) {
-    switch(c) {
-        case plus:
-            os << "plus";
-            break;
-        case minus:
-            os << "minus";
-            break;
-        case multiply:
-            os << "multiply";
-            break;
-        case divide:
-            os << "divide";
-            break;
-    }
-    return os;
-}
-
 struct node {
     bool leaf;
     Operator symbol;
@@ -88,6 +70,7 @@ int evaluate(node *root);
 int main() {
     node *expression = makeTree();
     std::cout << evaluate(expression) << std::endl;
+    delete expression;
 }
 
 node *makeTree() {
