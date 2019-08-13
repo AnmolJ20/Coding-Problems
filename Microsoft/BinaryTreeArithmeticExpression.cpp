@@ -15,11 +15,11 @@
 
 // For e.g., given the following tree:
 /*
-         *
-        / \
-       +   +
-      / \ / \
-     3  2 4  5
+ *
+ / \
+ +   +
+ / \ / \
+ 3  2 4  5
  */
 
 #include <iostream>
@@ -29,14 +29,32 @@ enum Operator {
     plus, minus, multiply, divide
 };
 
+std::ostream& operator<<(std::ostream& os, Operator c) {
+    switch(c) {
+        case plus:
+            os << "plus";
+            break;
+        case minus:
+            os << "minus";
+            break;
+        case multiply:
+            os << "multiply";
+            break;
+        case divide:
+            os << "divide";
+            break;
+    }
+    return os;
+}
+
 struct node {
     bool leaf;
     Operator symbol;
     int value;
-
+    
     node *left;
     node *right;
-
+    
     node(int n) : value(n) {
         left = right = nullptr;
     }
@@ -44,12 +62,12 @@ struct node {
     node(Operator n) : symbol(n) {
         left = right = nullptr;
     }
-
+    
     ~node() {
         delete left;
         delete right;
     }
-
+    
     template<typename T>
     void init(T input) {
         if (typeid(input) == typeid(Operator)) {
@@ -61,16 +79,15 @@ struct node {
             value = input;
         }
     }
-
+    
 };
 
 node *makeTree();
-int evaluate(node *root);
+float evaluate(node *root);
 
 int main() {
     node *expression = makeTree();
     std::cout << evaluate(expression) << std::endl;
-    delete expression;
 }
 
 node *makeTree() {
@@ -79,6 +96,7 @@ node *makeTree() {
     node *ptr;
     try {
         ptr = new node(std::stoi(input));
+        return ptr;
     }
     catch (const std::exception& e) {
         if (input == "plus")
@@ -89,8 +107,8 @@ node *makeTree() {
             ptr = new node(multiply);
         else if (input == "divide")
             ptr = new node(divide);
-        else if (input == "end")
-            return nullptr;
+        else
+            exit(1);
     }
     
     ptr->left = makeTree();
@@ -99,13 +117,13 @@ node *makeTree() {
     return ptr;
 }
 
-int evaluate(node *root) {
+float evaluate(node *root) {
     if (root->left == nullptr and root->right == nullptr) {
         return root->value;
     }
     
-    int left = evaluate(root->left);
-    int right = evaluate(root->right);
+    float left = evaluate(root->left);
+    float right = evaluate(root->right);
     
     switch(root->symbol) {
         case plus:
