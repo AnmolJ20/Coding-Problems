@@ -29,7 +29,7 @@ public:
     { return lhs.second > rhs.second; }
 };
 
-int maxClasses(std::set<std::pair<int, int>, FirstCompare> classes);
+int minClasses(std::set<std::pair<int, int>, FirstCompare> classes);
 
 int main() {
     int noOfClasses;
@@ -44,15 +44,15 @@ int main() {
         classes.insert(std::make_pair(x, y));
     }
     
-    std::cout << maxClasses(classes) << std::endl;
+    std::cout << minClasses(classes) << std::endl;
     return 0;
 }
 
-int maxClasses(std::set<std::pair<int, int>, FirstCompare> classes) {
+int minClasses(std::set<std::pair<int, int>, FirstCompare> classes) {
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int> >, SecondCompare> classesInProgress;
     classesInProgress.push(*classes.begin());
     classes.erase(*classes.begin());
-    int maxClass = 1;
+    int minClass = 1;
     int classesInUse = 1;
     
     for (std::pair<int, int> Class : classes) {
@@ -65,11 +65,11 @@ int maxClasses(std::set<std::pair<int, int>, FirstCompare> classes) {
         }
 
         classesInUse++;
-        if (classesInUse > maxClass)
-            maxClass = classesInUse;
+        if (classesInUse > minClass)
+            minClass = classesInUse;
         classesInProgress.push(nextClass);
     }
     
-    return maxClass;
+    return minClass;
 }
 
